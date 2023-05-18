@@ -80,6 +80,11 @@ namespace Task4Diyorend.Controllers
             var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
             if (user != null)
             {
+                if (!user.ActiveStatus)
+                {
+                    TempData["Error"] = "This user is blocked!";
+                    return View(loginViewModel);
+                }
                 var passwordCheck = await _userManager
                     .CheckPasswordAsync(user, loginViewModel.Password);
                 if (passwordCheck)

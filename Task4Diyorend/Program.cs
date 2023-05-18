@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Task4Diyorend.Data;
 using Task4Diyorend.Models;
+using Task4Diyorend.Repository.IRepository;
+using Task4Diyorend.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 //sql
 builder.Services.AddDbContext<DataContext>(options =>
 {

@@ -1,8 +1,23 @@
-﻿@{
+﻿@model AppUser
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h3 class="display-4">
+        Welcome to Application
+    </h3>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <p>You wanna <a asp-controller="Account" asp-action="Register">Register</a></p>
+        <p>If you have already account <a asp-controller="Account" asp-action="Login">Login</a></p>
+    }
+    else
+    {
+        <h4>
+            @Model.Name
+        </h4>
+    }
+    
+    
 </div>

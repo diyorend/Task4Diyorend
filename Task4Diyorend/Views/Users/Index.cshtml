@@ -1,0 +1,70 @@
+﻿@model List<AppUser>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <table style="display: block; overflow-x: auto; white-space: nowrap;width:100%" class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Last Login Time</th>
+                <th scope="col">Registration Time</th>
+                <th scope="col">Active Status</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.Count > 0)
+            {
+                @foreach (var obj in Model)
+                {
+                    <tr class="table-dark">
+                        <th scope="row">@obj.Email</th>
+                        <td>@obj.LastLoginTime</td>
+                        <td>@obj.RegistrationTime</td>
+                        <td>@obj.ActiveStatus</td>
+                        <td>
+                            @if (obj.ActiveStatus)
+                            {
+                                <a class="btn btn-danger btn-sm"
+                                   asp-controller="Users"
+                                   asp-action="BlockToggle"
+                                   asp-route-id="@obj.Id">
+                                   Block
+                               </a>
+                            }
+                            else
+                            {
+                                <a title="Unblock" class="btn btn-success btn-sm"
+                                    asp-controller="Users"
+                                    asp-action="BlockToggle"
+                                    asp-route-id="@obj.Id">
+                                    <i class="bi bi-unlock-fill"></i> &nbsp;
+                                    Unblock
+                                </a>
+                            }
+                            <a title="Delete" class="text-warning"
+                                asp-controller="Users" 
+                                asp-action="Delete"
+                                asp-route-id="@obj.Id">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            }
+        
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        <h4 class="py-3">You should Sign In to see this content</h4>
+        <a class="btn btn-primary mb-3" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+        <div>
+            If you don't have account yet 
+            <a class="" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+        </div>
+    </div>
+}
